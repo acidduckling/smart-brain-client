@@ -47,6 +47,23 @@ class App extends Component {
     this.state = initialState;
   }
 
+  componentDidMount() {
+    const token = sessionStorage.getItem('token');
+    if (token)
+      fetch(`${process.env.REACT_APP_SERVER_HOST}/signin`, {
+        method: 'post',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: token
+        }
+      })
+        .then(res => res.json())
+        .then(data => {
+          if (data && data.id) console.log('success - need to get user profile');
+        })
+        .catch(console.log);
+  }
+
   loadUser = data => {
     this.setState({
       user: {
@@ -109,7 +126,7 @@ class App extends Component {
         }
         this.displayFaceBoxes(this.calculateFaceLocations(response));
       })
-      .catch(err => console.log(err));
+      .catch(console.log);
   };
 
   onRouteChange = route => {
