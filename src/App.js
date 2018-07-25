@@ -92,6 +92,8 @@ class App extends Component {
   };
 
   calculateFaceLocations = data => {
+    if (!data || !data.outputs) return;
+
     return data.outputs[0].data.regions.map(face => {
       const clarifaiFace = face.region_info.bounding_box;
       const image = document.getElementById('inputimage');
@@ -107,6 +109,7 @@ class App extends Component {
   };
 
   displayFaceBoxes = boxes => {
+    if (!boxes) return;
     this.setState({ boxes: boxes });
   };
 
@@ -118,7 +121,10 @@ class App extends Component {
     this.setState({ imageUrl: this.state.input });
     fetch(`${process.env.REACT_APP_SERVER_HOST}/imageurl`, {
       method: 'post',
-      headers: { 'Content-Type': 'application/json' },
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: sessionStorage.getItem('token')
+      },
       body: JSON.stringify({
         input: this.state.input
       })
@@ -128,7 +134,10 @@ class App extends Component {
         if (response) {
           fetch(`${process.env.REACT_APP_SERVER_HOST}/image`, {
             method: 'put',
-            headers: { 'Content-Type': 'application/json' },
+            headers: {
+              'Content-Type': 'application/json',
+              Authorization: sessionStorage.getItem('token')
+            },
             body: JSON.stringify({
               id: this.state.user.id
             })

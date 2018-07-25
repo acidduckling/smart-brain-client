@@ -33,10 +33,15 @@ class Profile extends Component {
   onProfileUpdate = data => {
     fetch(`${process.env.REACT_APP_SERVER_HOST}/profile/${this.props.user.id}`, {
       method: 'post',
-      headers: { 'Content-Type': 'application/json' },
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: sessionStorage.getItem('token')
+      },
       body: JSON.stringify({ formInput: data })
     })
       .then(response => {
+        if (response.status !== 200 && response.status !== 304) return;
+
         this.props.toggleModal();
         this.props.loadUser({ ...this.props.user, ...data });
       })
