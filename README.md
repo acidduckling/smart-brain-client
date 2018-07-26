@@ -1,9 +1,9 @@
-# SmartBrain - v2
-Clone the smart-brain-api repo and follow the README.md instructions to get started.
+# SmartBrain
+Clone the https://github.com/acidduckling/smart-brain-api repo and follow the README.md instructions there to get started.
 
 ## Updating .env file
 
-When adding new variables ot the .env file, ensure it does not contain any sensitive data and then run the following to track new changes:
+When adding new variables to the .env file, ensure it does not contain any sensitive data and then run the following to track new changes:
 
 ```bash
 # Enable tracking of the changes
